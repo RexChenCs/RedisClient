@@ -1,6 +1,7 @@
 package com.redis.cache.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -49,6 +50,7 @@ public class RedisHomeFrame extends JFrame {
 		this.setTitle("Redis Cache Client");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(450, 190, 1014, 597);
+		this.setBackground(Color.WHITE);
 		this.setResizable(false);
 		redisLoginPanel.InitRedisLoginPanel(this);
 		redisHomeViewAllPanel.InitRedisHomeViewAllPanel();

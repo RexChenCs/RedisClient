@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Component
 @Data
-public class MenuProperty {
+public class MenuBarProperty {
 	
 	private Color menuItemBg = new Color(153,204,255);
 	private Color menuItemFg = Color.BLACK;

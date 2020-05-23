@@ -1,6 +1,6 @@
 package com.redis.cache.gui.layoutProperty;
 
-public enum Menu {
+public enum MenuItemButton {
 	
 	VIEW_ALL("View All"), 
 	SEARCH("Search"), 
@@ -11,7 +11,7 @@ public enum Menu {
 
 	private String value;
 	
-	Menu(String value) {
+	MenuItemButton(String value) {
 		this.value = value;
 	}
 	

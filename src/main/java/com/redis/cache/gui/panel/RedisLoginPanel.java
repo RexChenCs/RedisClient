@@ -9,7 +9,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -44,8 +43,8 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
     	this.homeFrame = homeFrame;
         this.setBorder(new EmptyBorder(5, 5, 5, 5));
         this.setLayout(null);
-
-        JLabel titleLabel = new JLabel("Redis Client");
+        this.setBackground(Color.WHITE);
+        JLabel titleLabel = new JLabel("Redis Client Login");
         titleLabel.setForeground(loginPanelProperty.getTitleColor());
         titleLabel.setFont(loginPanelProperty.getTitleFont());
         titleLabel.setBounds(423, 13, 273, 93);

@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import org.springframework.stereotype.Component;
 
 import com.redis.cache.gui.RedisHomeFrame;
-import com.redis.cache.gui.layoutProperty.Menu;
-import com.redis.cache.gui.layoutProperty.MenuProperty;
+import com.redis.cache.gui.layoutProperty.MenuItemButton;
+import com.redis.cache.gui.layoutProperty.MenuBarProperty;
 import com.redis.cache.gui.layoutProperty.Panel;
 
 @Component
@@ -22,42 +22,42 @@ public class RedisHomeMenuPanel extends JPanel implements ActionListener{
 	
 	public void InitRedisHomeMenuPanel(RedisHomeFrame homeFrame) {
 		this.homeFrame = homeFrame;
-		MenuProperty menuProperty = new MenuProperty();
+		MenuBarProperty menuBarProperty = new MenuBarProperty();
 		JButton viewAllButton, searchButton, deleteButton, addButton, ServerInfoButton, disconnectButton;
-		viewAllButton = new JButton(Menu.VIEW_ALL.getValue());
-		viewAllButton.setBackground(menuProperty.getMenuItemBg());
-		viewAllButton.setForeground(menuProperty.getMenuItemFg());
-		viewAllButton.setFont(menuProperty.getMenuItemFont());
+		viewAllButton = new JButton(MenuItemButton.VIEW_ALL.getValue());
+		viewAllButton.setBackground(menuBarProperty.getMenuItemBg());
+		viewAllButton.setForeground(menuBarProperty.getMenuItemFg());
+		viewAllButton.setFont(menuBarProperty.getMenuItemFont());
 		viewAllButton.addActionListener(this);
 		
-		searchButton = new JButton(Menu.SEARCH.getValue());
-		searchButton.setBackground(menuProperty.getMenuItemBg());
-		searchButton.setForeground(menuProperty.getMenuItemFg());
-		searchButton.setFont(menuProperty.getMenuItemFont());
+		searchButton = new JButton(MenuItemButton.SEARCH.getValue());
+		searchButton.setBackground(menuBarProperty.getMenuItemBg());
+		searchButton.setForeground(menuBarProperty.getMenuItemFg());
+		searchButton.setFont(menuBarProperty.getMenuItemFont());
 		searchButton.addActionListener(this);
 		
-		deleteButton = new JButton(Menu.DELETE.getValue());
-		deleteButton.setBackground(menuProperty.getMenuItemBg());
-		deleteButton.setForeground(menuProperty.getMenuItemFg());
-		deleteButton.setFont(menuProperty.getMenuItemFont());
+		deleteButton = new JButton(MenuItemButton.DELETE.getValue());
+		deleteButton.setBackground(menuBarProperty.getMenuItemBg());
+		deleteButton.setForeground(menuBarProperty.getMenuItemFg());
+		deleteButton.setFont(menuBarProperty.getMenuItemFont());
 		deleteButton.addActionListener(this);
 		
-		addButton = new JButton(Menu.SAVE.getValue());
-		addButton.setBackground(menuProperty.getMenuItemBg());
-		addButton.setForeground(menuProperty.getMenuItemFg());
-		addButton.setFont(menuProperty.getMenuItemFont());
+		addButton = new JButton(MenuItemButton.SAVE.getValue());
+		addButton.setBackground(menuBarProperty.getMenuItemBg());
+		addButton.setForeground(menuBarProperty.getMenuItemFg());
+		addButton.setFont(menuBarProperty.getMenuItemFont());
 		addButton.addActionListener(this);
 		
-		ServerInfoButton = new JButton(Menu.SERVER_INFO.getValue());
-		ServerInfoButton.setBackground(menuProperty.getMenuItemBg());
-		ServerInfoButton.setForeground(menuProperty.getMenuItemFg());
-		ServerInfoButton.setFont(menuProperty.getMenuItemFont());
+		ServerInfoButton = new JButton(MenuItemButton.SERVER_INFO.getValue());
+		ServerInfoButton.setBackground(menuBarProperty.getMenuItemBg());
+		ServerInfoButton.setForeground(menuBarProperty.getMenuItemFg());
+		ServerInfoButton.setFont(menuBarProperty.getMenuItemFont());
 		ServerInfoButton.addActionListener(this);
 		
-		disconnectButton = new JButton(Menu.DISCONNECT.getValue());
-		disconnectButton.setBackground(menuProperty.getMenuItemBg());
-		disconnectButton.setForeground(menuProperty.getMenuItemFg());
-		disconnectButton.setFont(menuProperty.getMenuItemFont());
+		disconnectButton = new JButton(MenuItemButton.DISCONNECT.getValue());
+		disconnectButton.setBackground(menuBarProperty.getMenuItemBg());
+		disconnectButton.setForeground(menuBarProperty.getMenuItemFg());
+		disconnectButton.setFont(menuBarProperty.getMenuItemFont());
 		disconnectButton.addActionListener(this);
 		this.add(viewAllButton);
 		this.add(searchButton);
@@ -65,12 +65,12 @@ public class RedisHomeMenuPanel extends JPanel implements ActionListener{
 		this.add(deleteButton);
 		this.add(ServerInfoButton);
 		this.add(disconnectButton);
-		this.setBackground(menuProperty.getMenuBg());
+		this.setBackground(menuBarProperty.getMenuBg());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getActionCommand().equals(Menu.DISCONNECT.getValue())) {
+		if(ae.getActionCommand().equals(MenuItemButton.DISCONNECT.getValue())) {
 			this.homeFrame.SwitchPanel(Panel.LOGIN_PANEL);
 		}else {
 			switchContentPanel(ae.getActionCommand());
