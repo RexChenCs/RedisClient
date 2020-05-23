@@ -1,4 +1,4 @@
-package com.redis.cache.gui;
+package com.redis.cache.gui.panel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,46 +18,38 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.redis.cache.gui.RedisHomeFrame;
 import com.redis.cache.gui.layoutProperty.LoginPanelProperty;
+import com.redis.cache.gui.layoutProperty.Panel;
 
 @Component
-public class RedisLoginGui extends JFrame implements ActionListener {
+public class RedisLoginPanel extends JPanel implements ActionListener {
 	
-
     private static final long serialVersionUID = 1L;
 
-    @Autowired
-    private LoginPanelProperty loginPanelProperty;
+    private LoginPanelProperty loginPanelProperty = new LoginPanelProperty();
     
-    @Autowired 
-    private RedisHomeGui redisHomeGui;
-    
-	JFrame frame = new JFrame("Redis Cache Client");
-    JPanel loginPanel;
     JLabel message, selectCertMessage;
     JTextField hostText,portText;
     JCheckBox isSslCheckText;
     JFileChooser certFile;
     JPasswordField passwordText;
     
-    public JPanel CreateRedisLoginGui() {
+    private RedisHomeFrame homeFrame;
+    
+    public void InitRedisLoginPanel(RedisHomeFrame homeFrame) {
     	
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setBounds(450, 190, 1014, 597);
-        this.frame.setResizable(false);
-        loginPanel = new JPanel();
-        loginPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        this.frame.setContentPane(loginPanel);
-        loginPanel.setLayout(null);
+    	this.homeFrame = homeFrame;
+        this.setBorder(new EmptyBorder(5, 5, 5, 5));
+        this.setLayout(null);
 
         JLabel titleLabel = new JLabel("Redis Client");
         titleLabel.setForeground(loginPanelProperty.getTitleColor());
         titleLabel.setFont(loginPanelProperty.getTitleFont());
         titleLabel.setBounds(423, 13, 273, 93);
-        loginPanel.add(titleLabel);
+        this.add(titleLabel);
         
         //host
         JLabel hostLabel = new JLabel("Host");
@@ -65,12 +57,12 @@ public class RedisLoginGui extends JFrame implements ActionListener {
         hostLabel.setBackground(loginPanelProperty.getLabelBgColor());
         hostLabel.setFont(loginPanelProperty.getLabelFont());
         hostLabel.setBounds(loginPanelProperty.getCurrent_X(0), loginPanelProperty.getCurrent_Y(0), loginPanelProperty.getLabel_width(), loginPanelProperty.getLabel_height());
-        loginPanel.add(hostLabel);
+        this.add(hostLabel);
 
         hostText = new JTextField();
         hostText.setFont(loginPanelProperty.getTextFont());
         hostText.setBounds(loginPanelProperty.getCurrent_X(1), loginPanelProperty.getCurrent_Y(0), loginPanelProperty.getText_width(), loginPanelProperty.getText_height());
-        loginPanel.add(hostText);
+        this.add(hostText);
         hostText.setColumns(50);
         
         //port
@@ -79,12 +71,12 @@ public class RedisLoginGui extends JFrame implements ActionListener {
         portLabel.setBackground(loginPanelProperty.getLabelBgColor());
         portLabel.setFont(loginPanelProperty.getLabelFont());
         portLabel.setBounds(loginPanelProperty.getCurrent_X(0), loginPanelProperty.getCurrent_Y(1), loginPanelProperty.getLabel_width(), loginPanelProperty.getLabel_height());
-        loginPanel.add(portLabel);
+        this.add(portLabel);
         
         portText = new JTextField();
         portText.setFont(loginPanelProperty.getTextFont());
         portText.setBounds(loginPanelProperty.getCurrent_X(1), loginPanelProperty.getCurrent_Y(1), loginPanelProperty.getText_width(), loginPanelProperty.getText_height());
-        loginPanel.add(portText);
+        this.add(portText);
         
         
         //password
@@ -93,12 +85,12 @@ public class RedisLoginGui extends JFrame implements ActionListener {
         passwordLabel.setBackground(loginPanelProperty.getLabelBgColor());
         passwordLabel.setFont(loginPanelProperty.getLabelFont());
         passwordLabel.setBounds(loginPanelProperty.getCurrent_X(0), loginPanelProperty.getCurrent_Y(2), loginPanelProperty.getLabel_width(), loginPanelProperty.getLabel_height());
-        loginPanel.add(passwordLabel);
+        this.add(passwordLabel);
         
         passwordText = new JPasswordField();
         passwordText.setFont(loginPanelProperty.getTextFont());
         passwordText.setBounds(loginPanelProperty.getCurrent_X(1), loginPanelProperty.getCurrent_Y(2), loginPanelProperty.getText_width(), loginPanelProperty.getText_height());
-        loginPanel.add(passwordText);
+        this.add(passwordText);
 
 
         //SSL Check
@@ -107,12 +99,12 @@ public class RedisLoginGui extends JFrame implements ActionListener {
         isSsLLabel.setBackground(loginPanelProperty.getLabelBgColor());
         isSsLLabel.setFont(loginPanelProperty.getLabelFont());
         isSsLLabel.setBounds(loginPanelProperty.getCurrent_X(0), loginPanelProperty.getCurrent_Y(3), loginPanelProperty.getLabel_width(), loginPanelProperty.getLabel_height());
-        loginPanel.add(isSsLLabel);
+        this.add(isSsLLabel);
         
         isSslCheckText = new JCheckBox();
         isSslCheckText.setFont(loginPanelProperty.getTextFont());
         isSslCheckText.setBounds(loginPanelProperty.getCurrent_X(1), loginPanelProperty.getCurrent_Y(3), loginPanelProperty.getText_width(), loginPanelProperty.getText_height());
-        loginPanel.add(isSslCheckText);
+        this.add(isSslCheckText);
 
 
         //Certification Path
@@ -121,7 +113,7 @@ public class RedisLoginGui extends JFrame implements ActionListener {
         certPathLabel.setBackground(loginPanelProperty.getLabelBgColor());
         certPathLabel.setFont(loginPanelProperty.getLabelFont());
         certPathLabel.setBounds(loginPanelProperty.getCurrent_X(0), loginPanelProperty.getCurrent_Y(4), loginPanelProperty.getLabel_width(), loginPanelProperty.getLabel_height());
-        loginPanel.add(certPathLabel);
+        this.add(certPathLabel);
         
         JButton openCertFileButton = new JButton("Select File");
         openCertFileButton.setFont(loginPanelProperty.getTextFont());
@@ -131,18 +123,18 @@ public class RedisLoginGui extends JFrame implements ActionListener {
         //openCertFileButton.setForeground(Color.BLUE); 
         openCertFileButton.setBorder(BorderFactory.createRaisedBevelBorder());
         
-        loginPanel.add(openCertFileButton);
+        this.add(openCertFileButton);
         
         selectCertMessage = new JLabel("");
         selectCertMessage.setFont(loginPanelProperty.getTextFont());
         selectCertMessage.setBounds(loginPanelProperty.getCurrent_X(1), loginPanelProperty.getCurrent_Y(5), loginPanelProperty.getLabel_width()+50, loginPanelProperty.getText_height());
-        loginPanel.add(selectCertMessage);
+        this.add(selectCertMessage);
         
         JButton submit = new JButton("Connect");
         submit.setFont(new Font("Tahoma", Font.PLAIN, 20));
         submit.setBorder(BorderFactory.createRaisedBevelBorder());
         submit.setBounds(loginPanelProperty.getCurrent_X(2), loginPanelProperty.getCurrent_Y(7), 120, 50);
-        loginPanel.add(submit);
+        this.add(submit);
         
         // Adding the listeners to components..
         openCertFileButton.addActionListener(this);
@@ -150,21 +142,18 @@ public class RedisLoginGui extends JFrame implements ActionListener {
         
         message = new JLabel("");
         message.setBounds(loginPanelProperty.getCurrent_X(0), loginPanelProperty.getCurrent_Y(6),loginPanelProperty.getLabel_width(), loginPanelProperty.getLabel_height());
-        loginPanel.add(message);
-        this.frame.setVisible(true);
-        return loginPanel;
+        this.add(message);
+
     }
 
 	@Override
     public void actionPerformed(ActionEvent ae) {
     	String actionCommand = ae.getActionCommand();
     	
-    	//open certification file action
     	if (actionCommand.equals("Select File")) {
     		SearchCertFile();
     	}
     	
-    	//connect service action 
     	if (actionCommand.equals("Connect")) {
     		ConnectService();
     	}
@@ -200,8 +189,7 @@ public class RedisLoginGui extends JFrame implements ActionListener {
             
         } else {
             message.setText("Invalid user.. ");
-            redisHomeGui.createRedisHome(this.frame);
-
+            this.homeFrame.SwitchPanel(Panel.VIEW_PANEL);
         }
     }
 

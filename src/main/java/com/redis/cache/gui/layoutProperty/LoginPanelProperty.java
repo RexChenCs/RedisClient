@@ -3,9 +3,7 @@ package com.redis.cache.gui.layoutProperty;
 import java.awt.Color;
 import java.awt.Font;
 
-import org.springframework.stereotype.Component;
 
-@Component
 public class LoginPanelProperty {
 	
 	private Font titleFont = new Font("Times New Roman", Font.PLAIN, 24);

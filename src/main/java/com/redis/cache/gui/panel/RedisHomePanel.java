@@ -1,4 +1,4 @@
-package com.redis.cache.gui;
+package com.redis.cache.gui.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,67 +16,62 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.redis.cache.gui.layoutProperty.Menu;
 import com.redis.cache.gui.layoutProperty.MenuProperty;
 
-@Component
-public class RedisHomeGui extends JFrame implements ActionListener{
+
+public class RedisHomePanel extends JPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 
-	@Autowired 
-	private RedisLoginGui loginGui;
+ 
+	//private RedisLoginGui loginGui;
 	
-	@Autowired
-	private MenuProperty menuProperty;
+	
+	private MenuProperty menuProperty = new MenuProperty();
 
 	
 	private JFrame mainframe;
 	private JPanel contentPanel, menuPanel,searchPanel, addPanel, deletePanel;
 	private JScrollPane viewAllPanel,serverInfoPanel;
 	
-	public void createRedisHome(JFrame frame) {
-		
-		this.mainframe = frame;
+	public RedisHomePanel() {
 		this.menuPanel = createMenuPanel();
-		this.viewAllPanel = createViewAllPanel();
-		this.searchPanel = createSearchPanel();
-		this.addPanel = createAddPanel();
-		this.deletePanel = createDeletePanel();
-		this.serverInfoPanel = createServerInfoPanel();
-		this.contentPanel = new JPanel();
-		this.contentPanel.setLayout(new BorderLayout());
-		this.contentPanel.add(this.menuPanel,BorderLayout.NORTH);	
-		this.contentPanel.add(this.viewAllPanel,BorderLayout.CENTER);
-		this.mainframe.setContentPane(this.contentPanel);
-        this.mainframe.invalidate();
-        this.mainframe.validate();
+		//this.viewAllPanel = createViewAllPanel();
+		//this.searchPanel = createSearchPanel();
+		//this.addPanel = createAddPanel();
+		//this.deletePanel = createDeletePanel();
+		//this.serverInfoPanel = createServerInfoPanel();
+//		this.contentPanel = new JPanel();
+		this.setLayout(new BorderLayout());
+		this.add(this.menuPanel,BorderLayout.NORTH);	
+		this.add(this.viewAllPanel,BorderLayout.CENTER);
+//		this.mainframe.setContentPane(this.contentPanel);
+//      this.mainframe.invalidate();
+//      this.mainframe.validate();
 	
 	}
 	
-	public void createRedisHome(JScrollPane scrollPane) {
-		this.contentPanel = new JPanel();
-		this.contentPanel.setLayout(new BorderLayout());
-		this.contentPanel.add(this.menuPanel,BorderLayout.NORTH);
-		this.contentPanel.add(scrollPane,BorderLayout.CENTER);
-		this.mainframe.setContentPane(this.contentPanel);
-        this.mainframe.invalidate();
-        this.mainframe.validate();
-	}
-	
-	public void createRedisHome(JPanel panel) {
-		this.contentPanel = new JPanel();
-		this.contentPanel.setLayout(new BorderLayout());
-		this.contentPanel.add(this.menuPanel,BorderLayout.NORTH);
-		this.contentPanel.add(panel,BorderLayout.CENTER);
-		this.mainframe.setContentPane(this.contentPanel);
-        this.mainframe.invalidate();
-        this.mainframe.validate();
-	}
-	
+//	public void createRedisHome(JScrollPane scrollPane) {
+//		this.contentPanel = new JPanel();
+//		this.contentPanel.setLayout(new BorderLayout());
+//		this.contentPanel.add(this.menuPanel,BorderLayout.NORTH);
+//		this.contentPanel.add(scrollPane,BorderLayout.CENTER);
+//		this.mainframe.setContentPane(this.contentPanel);
+//        this.mainframe.invalidate();
+//        this.mainframe.validate();
+//	}
+
+//	public void createRedisHome(JPanel panel) {
+//		this.contentPanel = new JPanel();
+//		this.contentPanel.setLayout(new BorderLayout());
+//		this.contentPanel.add(this.menuPanel,BorderLayout.NORTH);
+//		this.contentPanel.add(panel,BorderLayout.CENTER);
+//		this.mainframe.setContentPane(this.contentPanel);
+//        this.mainframe.invalidate();
+//        this.mainframe.validate();
+//	}
+//	
 
 	public JPanel createMenuPanel() {
 		
@@ -99,7 +94,7 @@ public class RedisHomeGui extends JFrame implements ActionListener{
 		deleteButton.setFont(menuProperty.getMenuItemFont());
 		deleteButton.addActionListener(this);
 		
-		addButton = new JButton(Menu.ADD.getValue());
+		addButton = new JButton(Menu.SAVE.getValue());
 		addButton.setBackground(menuProperty.getMenuItemBg());
 		addButton.setForeground(menuProperty.getMenuItemFg());
 		addButton.setFont(menuProperty.getMenuItemFont());
@@ -145,7 +140,7 @@ public class RedisHomeGui extends JFrame implements ActionListener{
 		return scrollPane;
 	}
 	
-
+/*
 	private JTextField searchKeyValue;
 	private JLabel searchResponse;
 	
@@ -310,7 +305,7 @@ public class RedisHomeGui extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getActionCommand().equals(Menu.DISCONNECT.getValue())) {
-			this.mainframe.setContentPane(loginGui.CreateRedisLoginGui());
+//			this.mainframe.setContentPane(loginGui.CreateRedisLoginGui());
 	        this.mainframe.invalidate();
 	        this.mainframe.validate();
 		}else {
@@ -342,5 +337,11 @@ public class RedisHomeGui extends JFrame implements ActionListener{
 			createRedisHome(this.serverInfoPanel);
 		}
 	}
-	
+	*/
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

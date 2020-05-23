@@ -2,9 +2,9 @@ package com.redis.cache.gui.layoutProperty;
 
 public enum Menu {
 	
-	VIEW_ALL("View all"), 
+	VIEW_ALL("View All"), 
 	SEARCH("Search"), 
-	ADD("Add"), 
+	SAVE("Save"), 
 	DELETE("Delete"), 
 	SERVER_INFO("Server Info"), 
 	DISCONNECT("Disconnect");
