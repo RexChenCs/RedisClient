@@ -5,7 +5,6 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,15 +58,10 @@ public class RedisHomeFrame extends JFrame {
 		redisHomeSavePanel.InitRedisHomeSavePanel();
 		redisHomeDeletePanel.InitRedisHomeDeletePanel();
 		redisHomeServerInfoPanel.InitRedisHomeServerInfoPanel();
-		//this.setContentPane(redisLoginPanel);
 		LoginUI();
 	}
 
 	public void LoginUI() {
-//		this.setTitle("Redis Cache Client");
-//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.setBounds(450, 190, 1014, 597);
-//		this.setResizable(false);
 		JPanel homePanel = new JPanel();
 		homePanel.setLayout(new BorderLayout());
 		homePanel.add(redisLoginPanel, BorderLayout.CENTER);
@@ -75,10 +69,6 @@ public class RedisHomeFrame extends JFrame {
 	}
 
 	public void HomeUI(JPanel panel) {
-//		this.setTitle("Redis Cache Client");
-//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.setBounds(450, 190, 1014, 597);
-//		this.setResizable(false);
 		JPanel homePanel = new JPanel();
 		homePanel.setLayout(new BorderLayout());
 		homePanel.add(redisHomeMenuPanel, BorderLayout.NORTH);
@@ -86,18 +76,6 @@ public class RedisHomeFrame extends JFrame {
 		this.setContentPane(homePanel);
 	}
 	
-	public void HomeUI(JScrollPane panel) {
-//		this.setTitle("Redis Cache Client");
-//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.setBounds(450, 190, 1014, 597);
-//		this.setResizable(false);
-		JPanel homePanel = new JPanel();
-		homePanel.setLayout(new BorderLayout());
-		homePanel.add(redisHomeMenuPanel, BorderLayout.NORTH);
-		homePanel.add(panel, BorderLayout.CENTER);
-		this.setContentPane(homePanel);
-	}
-
 	public void SwitchPanel(Panel panel) {
 		switch (panel) {
 			case LOGIN_PANEL:
@@ -119,7 +97,6 @@ public class RedisHomeFrame extends JFrame {
 				HomeUI(redisHomeServerInfoPanel);
 				break;
 			default:
-				System.out.println("Midweek days are so-so.");
 				break;
 		}
 		SwingUtilities.updateComponentTreeUI(this);

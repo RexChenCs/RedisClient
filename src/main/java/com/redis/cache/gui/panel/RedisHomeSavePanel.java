@@ -52,7 +52,7 @@ public class RedisHomeSavePanel extends JPanel{
 		
 		contentPanel = new JPanel();
 		contentPanel.setLayout(null);
-		
+		contentPanel.setBackground(Color.WHITE);
         //save key
         JLabel keyLabel = new JLabel("Key");  
         keyLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));

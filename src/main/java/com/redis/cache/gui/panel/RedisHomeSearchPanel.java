@@ -49,8 +49,8 @@ public class RedisHomeSearchPanel extends JPanel{
 	public void InitContentPanel() {
 		
 		contentPanel = new JPanel();
-		//contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPanel.setLayout(null);
+		contentPanel.setBackground(Color.WHITE);
 		
         //serch key
         JLabel keyLabel = new JLabel("Key");  
@@ -87,31 +87,10 @@ public class RedisHomeSearchPanel extends JPanel{
 		searchResponsePanel.setBorder(new LineBorder(Color.GRAY));
 		searchResponsePanel.setLayout(new ScrollPaneLayout());
 		searchResponsePanel.setAutoscrolls(true);
-		searchResponse =new JTextArea("Response test Text " +
-//				"2020-05-23 15:22:17.905  INFO 41054 --- [  restartedMain] c.redis.cache.RedisCacheGuiApplication   : Starting RedisCacheGuiApplication on QIXIANGs-MacBook-Pro.local with PID 41054 (/Users/Rex/Desktop/Redis/RedisClient/target/classes started by Admin in /Users/Rex/Desktop/Redis/RedisClient)\n" + 
-//				"2020-05-23 15:22:17.906  INFO 41054 --- [  restartedMain] c.redis.cache.RedisCacheGuiApplication   : No active profile set, falling back to default profiles: default\n" + 
-//				"2020-05-23 15:22:18.016  INFO 41054 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!\n" + 
-//				"2020-05-23 15:22:18.016  INFO 41054 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.\n" + 
-//				"2020-05-23 15:22:18.027  INFO 41054 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11ms. Found 0 Redis repository interfaces.\n" + 
-//				"2020-05-23 15:22:18.140  INFO 41054 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729\n" + 
-//				"2020-05-23 15:22:18.161  INFO 41054 --- [  restartedMain] c.redis.cache.RedisCacheGuiApplication   : Started RedisCacheGuiApplication in 0.277 seconds (JVM running for 388.764)\n" + 
-//				"2020-05-23 15:22:18.162  INFO 41054 --- [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged\n" + 
-//				"2020-05-23 15:22:18.140  INFO 41054 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729\n" + 
-//				"2020-05-23 15:22:18.161  INFO 41054 --- [  restartedMain] c.redis.cache.RedisCacheGuiApplication   : Started RedisCacheGuiApplication in 0.277 seconds (JVM running for 388.764)\n" + 
-//				"2020-05-23 15:22:18.162  INFO 41054 --- [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged\n" + 
-//				"2020-05-23 15:22:18.140  INFO 41054 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729\n" + 
-//				"2020-05-23 15:22:18.161  INFO 41054 --- [  restartedMain] c.redis.cache.RedisCacheGuiApplication   : Started RedisCacheGuiApplication in 0.277 seconds (JVM running for 388.764)\n" + 
-//				"2020-05-23 15:22:18.162  INFO 41054 --- [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged\n" + 
-//				"2020-05-23 15:22:18.140  INFO 41054 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729\n" + 
-//				"2020-05-23 15:22:18.161  INFO 41054 --- [  restartedMain] c.redis.cache.RedisCacheGuiApplication   : Started RedisCacheGuiApplication in 0.277 seconds (JVM running for 388.764)\n" + 
-//				"2020-05-23 15:22:18.162  INFO 41054 --- [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged\n" + 
-				"");
+		searchResponse =new JTextArea("Response test Text");
 		searchResponse.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		searchResponse.setForeground(Color.BLUE);
 		searchResponsePanel.setViewportView(searchResponse);
-		//searchResponsePanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);  
-		//searchResponsePanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);  
-
 	}
 
 }

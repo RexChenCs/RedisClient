@@ -51,6 +51,7 @@ public class RedisHomeDeletePanel extends JPanel{
 		
 		contentPanel = new JPanel();
 		contentPanel.setLayout(null);
+		contentPanel.setBackground(Color.WHITE);
 		
         //save key
         JLabel keyLabel = new JLabel("Key");  
