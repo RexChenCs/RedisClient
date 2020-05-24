@@ -25,6 +25,7 @@ import com.redis.cache.gui.RedisHomeFrame;
 import com.redis.cache.gui.layoutProperty.LoginPanelProperty;
 import com.redis.cache.gui.layoutProperty.Panel;
 import com.redis.cache.service.RedisProperty;
+import com.redis.cache.service.RedisService;
 
 @Component
 public class RedisLoginPanel extends JPanel implements ActionListener {
@@ -184,6 +185,7 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
 
     }
     
+    @Autowired RedisService redisService;
     
     @SuppressWarnings("deprecation")
 	public void ConnectService() {
@@ -208,7 +210,8 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
         } else {     
         	JOptionPane.showMessageDialog(null, this.redisProperty.toString());
     		JOptionPane.showMessageDialog(null, "Connecting Server");
-            this.homeFrame.SwitchPanel(Panel.VIEW_PANEL);
+    		if(redisService.ConnectService())
+    			this.homeFrame.SwitchPanel(Panel.VIEW_PANEL);
         }
     }
 
