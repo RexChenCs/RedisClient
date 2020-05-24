@@ -3,6 +3,8 @@ package com.redis.cache.gui.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,13 +20,12 @@ import javax.swing.border.LineBorder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RedisHomeSearchPanel extends JPanel{
+public class RedisHomeSearchPanel extends JPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 
 	private JTextField searchKeyValue;
 	private JTextArea searchResponse;
-	//private RedisHomeFrame homeFrame;
 	private JPanel titlePanel,contentPanel;
 	private JScrollPane searchResponsePanel;
 	
@@ -65,11 +66,12 @@ public class RedisHomeSearchPanel extends JPanel{
         contentPanel.add(searchKeyValue);
         
         
-        JButton submit = new JButton("Search");
-        submit.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        submit.setBorder(BorderFactory.createRaisedBevelBorder());
-        submit.setBounds(650, 50, 100, 24);
-        contentPanel.add(submit);
+        JButton searchBtn = new JButton("Search");
+        searchBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        searchBtn.setBorder(BorderFactory.createRaisedBevelBorder());
+        searchBtn.setBounds(650, 50, 100, 24);
+        searchBtn.addActionListener(this);
+        contentPanel.add(searchBtn);
         
         
         JLabel resultLabel = new JLabel("Result:");  
@@ -87,10 +89,16 @@ public class RedisHomeSearchPanel extends JPanel{
 		searchResponsePanel.setBorder(new LineBorder(Color.GRAY));
 		searchResponsePanel.setLayout(new ScrollPaneLayout());
 		searchResponsePanel.setAutoscrolls(true);
-		searchResponse =new JTextArea("Response test Text");
+		searchResponse =new JTextArea();
 		searchResponse.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		searchResponse.setForeground(Color.BLUE);
 		searchResponsePanel.setViewportView(searchResponse);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String key = searchKeyValue.getText();
+		searchResponse.setText(key);
 	}
 
 }

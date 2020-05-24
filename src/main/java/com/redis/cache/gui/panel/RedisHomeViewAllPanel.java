@@ -18,6 +18,7 @@ public class RedisHomeViewAllPanel extends JPanel{
 	
 	private JPanel titlePanel;
 	private JScrollPane contentPanel;
+	private JList<String> keyList = new JList<>();
 	
 	public void InitRedisHomeViewAllPanel() {
         this.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -39,13 +40,14 @@ public class RedisHomeViewAllPanel extends JPanel{
 	
 	public void InitContentPanel() {
 		contentPanel = new JScrollPane();
-		//JList<String> KeyList = new JList<String>();
 		contentPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
-        String keys[]= { "Monday","Tuesday","Wednesday", "Thursday","Friday","Saturday","Sunday"}; 
-        JList<String> keyList= new JList<>();
-        keyList.setListData(keys);
-        keyList.setSelectedIndex(0);
         keyList.setBounds(0, 50, WIDTH, HEIGHT);
         contentPanel.getViewport().add(keyList);
+	}
+	
+	public void UpdateViewAllKeyList() {
+		String keys[]= { "Monday","Tuesday","Wednesday", "Thursday","Friday","Saturday","Sunday"}; 
+		keyList.setListData(keys);
+		keyList.setSelectedIndex(0);
 	}
 }

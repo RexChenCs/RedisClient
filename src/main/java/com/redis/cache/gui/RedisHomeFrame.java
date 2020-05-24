@@ -82,6 +82,7 @@ public class RedisHomeFrame extends JFrame {
 				LoginUI();
 				break;
 			case VIEW_PANEL:
+				redisHomeViewAllPanel.UpdateViewAllKeyList();
 				HomeUI(redisHomeViewAllPanel);
 				break;
 			case SEARCH_PANEL:
@@ -94,6 +95,7 @@ public class RedisHomeFrame extends JFrame {
 				HomeUI(redisHomeDeletePanel);
 				break;
 			case SERVER_INFO_PANEL:
+				redisHomeServerInfoPanel.UpdateServerInfoList();
 				HomeUI(redisHomeServerInfoPanel);
 				break;
 			default:

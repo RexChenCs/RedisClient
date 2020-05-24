@@ -16,7 +16,7 @@ public class RedisHomeServerInfoPanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	
-	private JList<String> serverInfoList;
+	private JList<String> serverInfoList = new JList<>();
 	private JPanel titlePanel;
 	private JScrollPane contentPanel;
 	
@@ -41,11 +41,13 @@ public class RedisHomeServerInfoPanel extends JPanel{
 	public void InitContentPanel() {
 		contentPanel = new JScrollPane();
 		contentPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
-		String keys[]= { "version","pool","config"}; 
-		serverInfoList= new JList<>();
-		serverInfoList.setListData(keys);
-		serverInfoList.setSelectedIndex(0);
 		serverInfoList.setBounds(0, 50, WIDTH, HEIGHT);
         contentPanel.getViewport().add(serverInfoList);
+	}
+	
+	public void UpdateServerInfoList() {
+		String keys[]= { "version","pool","config"}; 
+		serverInfoList.setListData(keys);
+		serverInfoList.setSelectedIndex(0);
 	}
 }

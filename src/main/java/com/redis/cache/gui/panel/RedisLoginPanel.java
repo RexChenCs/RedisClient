@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -17,11 +18,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.redis.cache.gui.RedisHomeFrame;
 import com.redis.cache.gui.layoutProperty.LoginPanelProperty;
 import com.redis.cache.gui.layoutProperty.Panel;
+import com.redis.cache.service.RedisProperty;
 
 @Component
 public class RedisLoginPanel extends JPanel implements ActionListener {
@@ -29,6 +32,9 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
     private static final long serialVersionUID = 1L;
 
     private LoginPanelProperty loginPanelProperty = new LoginPanelProperty();
+    
+    @Autowired
+    private RedisProperty redisProperty;
     
     JLabel message, selectCertMessage;
     JTextField hostText,portText;
@@ -137,6 +143,7 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
         
         // Adding the listeners to components..
         openCertFileButton.addActionListener(this);
+        
         submit.addActionListener(this);
         
         message = new JLabel("");
@@ -178,16 +185,29 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
     }
     
     
-    public void ConnectService() {
-        String userName = hostText.getText();
-        @SuppressWarnings("deprecation")
-		String password = passwordText.getText();
-        if (userName.trim().equals("admin") && password.trim().equals("admin")
-        		&& isSslCheckText.isSelected()) {
-            message.setText(certFile.getSelectedFile().getAbsolutePath());
-            
-        } else {
-            message.setText("Invalid user.. ");
+    @SuppressWarnings("deprecation")
+	public void ConnectService() {
+    	redisProperty.setHost(hostText.getText().trim());
+    	redisProperty.setPort(portText.getText().trim());
+    	redisProperty.setPassword(passwordText.getText());
+    	redisProperty.setSslUsed(isSslCheckText.isSelected());
+    	if(certFile != null && certFile.getSelectedFile() != null) {
+    		redisProperty.setCertPath(certFile.getSelectedFile().getAbsolutePath());
+    	}
+        if(this.redisProperty.getHost().isEmpty()) {
+        	JOptionPane.showMessageDialog(null, "The host cannot be empty");
+        }
+        else if(this.redisProperty.getPort().isEmpty()) {
+        	JOptionPane.showMessageDialog(null, "The port cannot be empty");
+        }
+        else if(this.redisProperty.getPassword().isEmpty()) {
+        	JOptionPane.showMessageDialog(null, "The password cannot be empty");
+        }
+        else if (this.redisProperty.isSslUsed() && this.redisProperty.getCertPath() == null) {
+            JOptionPane.showMessageDialog(null, "Please Select the ssl file");
+        } else {     
+        	JOptionPane.showMessageDialog(null, this.redisProperty.toString());
+    		JOptionPane.showMessageDialog(null, "Connecting Server");
             this.homeFrame.SwitchPanel(Panel.VIEW_PANEL);
         }
     }
