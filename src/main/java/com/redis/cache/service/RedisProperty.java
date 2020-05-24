@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class RedisProperty {
 	
 	private String host;
-	private String port;
+	private String port = "6379";
 	private boolean isSslUsed;
 	private String password;
 	private String certPath;
@@ -20,7 +20,9 @@ public class RedisProperty {
 		return port;
 	}
 	public void setPort(String port) {
-		this.port = port;
+		if(!port.isEmpty()) {
+			this.port = port;
+		}
 	}
 	public boolean isSslUsed() {
 		return isSslUsed;

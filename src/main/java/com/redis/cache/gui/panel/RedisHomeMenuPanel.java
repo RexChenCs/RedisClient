@@ -6,18 +6,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.redis.cache.gui.RedisHomeFrame;
-import com.redis.cache.gui.layoutProperty.MenuItemButton;
 import com.redis.cache.gui.layoutProperty.MenuBarProperty;
+import com.redis.cache.gui.layoutProperty.MenuItemButton;
 import com.redis.cache.gui.layoutProperty.Panel;
+import com.redis.cache.service.RedisService;
 
 @Component
 public class RedisHomeMenuPanel extends JPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 
+	@Autowired RedisService redisService;
+	
 	private RedisHomeFrame homeFrame;
 	
 	public void InitRedisHomeMenuPanel(RedisHomeFrame homeFrame) {
@@ -71,6 +75,7 @@ public class RedisHomeMenuPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getActionCommand().equals(MenuItemButton.DISCONNECT.getValue())) {
+			redisService.Disconnect();
 			this.homeFrame.SwitchPanel(Panel.LOGIN_PANEL);
 		}else {
 			switchContentPanel(ae.getActionCommand());
