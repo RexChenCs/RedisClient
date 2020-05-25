@@ -17,7 +17,10 @@ import javax.swing.ScrollPaneLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.redis.cache.service.RedisService;
 
 @Component
 public class RedisHomeSavePanel extends JPanel implements ActionListener{
@@ -28,6 +31,9 @@ public class RedisHomeSavePanel extends JPanel implements ActionListener{
 	private JPanel titlePanel = new JPanel(),contentPanel = new JPanel();
 	private JScrollPane saveResponsePanel = new JScrollPane();
 	private JTextArea saveResponse;
+	
+	@Autowired
+	private RedisService redisService;
 	
 	public void InitRedisHomeSavePanel() {
         this.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -104,6 +110,7 @@ public class RedisHomeSavePanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String key  = saveKeyValue.getText();
 		String value = saveBodyValue.getText();
-		saveResponse.setText(key + ": " + value);
+		boolean isSaved = redisService.SaveCache(key, value);
+		saveResponse.setText(isSaved?"Save Successfully.":"Fail to Save");
 	}
 }
