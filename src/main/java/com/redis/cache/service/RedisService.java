@@ -10,8 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.redis.cache.utils.SerializeUtil;
-
 import redis.clients.jedis.Jedis;
 
 @Component
@@ -82,18 +80,35 @@ public class RedisService {
 			type = jedis.type(key);
 			if (type.equals("hash")) {
 				Map<String, String> map = jedis.hgetAll(key);
-				resultPair = key + ":" + "[" + StringUtils.join(map) + "]" + System.lineSeparator();
+				resultPair = "Key: " +key + System.lineSeparator() 
+								+ getTimeToLive(key) + System.lineSeparator() 
+								+ "Value [" + System.lineSeparator()
+								+ StringUtils.join(map,System.lineSeparator()) + System.lineSeparator()
+								+ "]" + System.lineSeparator();
 				
 			} else if(type.equals("set")) {
 				Set<String> set = jedis.smembers(key);
-				resultPair = key + ":" + "[" + StringUtils.join(set) + "]" + System.lineSeparator();
+				resultPair = "Key: " +key + System.lineSeparator() 
+								+ getTimeToLive(key) + System.lineSeparator() 
+								+ "Value [" + System.lineSeparator()
+								+ StringUtils.join(set,System.lineSeparator()) + System.lineSeparator()
+								+ "]" + System.lineSeparator();
+				
 			} else if(type.equals("list")) {
 				@SuppressWarnings("deprecation")
 				List<String> list=jedis.brpop(key);
-				resultPair = key + ":" + "[" + StringUtils.join(list) + "]" + System.lineSeparator();
+				resultPair ="Key: " + key + System.lineSeparator()
+								+ getTimeToLive(key) + System.lineSeparator() 						 
+								+ "Value [" + StringUtils.join(list,System.lineSeparator()) + System.lineSeparator()
+								+ "]" + System.lineSeparator();
+				
 			}else if(type.equals("string")){
 				String value = jedis.get(key);
-				resultPair = key + ":" + "[" + value + "]" + System.lineSeparator();
+				resultPair ="Key: " + key + System.lineSeparator() 
+								+ getTimeToLive(key) + System.lineSeparator() 
+								+ "Value [" + System.lineSeparator()
+								+ value + System.lineSeparator()
+								+ "]" + System.lineSeparator();
 			}
 			result += resultPair;
 		}
@@ -136,19 +151,24 @@ public class RedisService {
 		jedis.close();
 	}
 
-	public Object getCacheForObject(String key) {
 
-		Object responseContent = null;
-
+	public String getTimeToLive(String key) {
+		String ttlResult ="Time To Live (Sec): ";
+		long ttl = 0;
 		try {
-			byte[] value = jedis.get(key.getBytes());
-			value = jedis.hget("TokenResponse".getBytes(), "AetnaSandbox".getBytes());
-			responseContent = SerializeUtil.unserialize(value);
+			ttl = jedis.ttl(key);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Connection Fail: " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "Retrieve TTL Fail: " + e.getMessage());
 		}
 
-		return responseContent;
+		if(ttl == -2) {
+			ttlResult+= "Key does not exists";
+		}else if(ttl == -1) {
+			ttlResult+= "Never expire";
+		}else {
+			ttlResult+= ttl;
+		}
+		return ttlResult;
 	}
-
+	
 }
