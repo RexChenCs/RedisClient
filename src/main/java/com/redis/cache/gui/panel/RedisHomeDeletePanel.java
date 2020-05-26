@@ -102,14 +102,18 @@ public class RedisHomeDeletePanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String key = deleteKeyValue.getText();
-		long numOfCacheDeleted = redisService.DeleteCache(key);
 		
-		if(numOfCacheDeleted == -1) {
-			deleteResponse.setText("Fail to Delete");
-		}else if(numOfCacheDeleted == 0) {
-			deleteResponse.setText("None of the specified key existed: "+key);
+		if(! key.isEmpty()) {
+			long numOfCacheDeleted = redisService.DeleteCache(key);
+			if(numOfCacheDeleted == -1) {
+				deleteResponse.setText("Fail to Delete");
+			}else if(numOfCacheDeleted == 0) {
+				deleteResponse.setText("None of the specified key existed: "+key);
+			}else {
+				deleteResponse.setText(numOfCacheDeleted+" keys were removed");
+			}
 		}else {
-			deleteResponse.setText(numOfCacheDeleted+" keys were removed");
+			deleteResponse.setText("Key can not be empty");
 		}
 	}
 }

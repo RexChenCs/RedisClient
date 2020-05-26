@@ -102,8 +102,13 @@ public class RedisHomeSearchPanel extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String key = redisService.SearchValueByKey(searchKeyValue.getText());
-		searchResponse.setText(key);
+		String key = searchKeyValue.getText();
+		if(!key.isEmpty()) {
+			String result = redisService.SearchValueByKey(key);
+			searchResponse.setText(result);
+		}else {
+			searchResponse.setText("Key can not be empty");
+		}
 	}
 
 }

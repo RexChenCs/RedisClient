@@ -228,7 +228,7 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
         else if (this.redisProperty.isSslUsed() && this.redisProperty.getCertPath() == null) {
             JOptionPane.showMessageDialog(null, "Please Select the ssl file");
         } else {     
-        	JOptionPane.showMessageDialog(null, this.redisProperty.toString());
+        	//JOptionPane.showMessageDialog(null, this.redisProperty.toString());
     		if(redisService.ConnectService()) {
     			JOptionPane.showMessageDialog(null, "Connecting Server");
     			this.homeFrame.SwitchPanel(Panel.VIEW_PANEL);
