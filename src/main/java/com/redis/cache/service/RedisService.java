@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.redis.cache.util.RedisUtil;
+
 import redis.clients.jedis.Jedis;
 
 @Component
@@ -73,7 +75,7 @@ public class RedisService {
 	public String SearchValueByKey(String searchKey) {
 		String[] keys = SearchAllKey(searchKey);
 		if (keys.length == 0) {
-			return "Does not fidn the values of all the specified keys";
+			return "Does not find the values of all the specified keys";
 		}
 		String result = "", resultPair = "",type="";
 		for (String key : keys) {
@@ -82,34 +84,30 @@ public class RedisService {
 				Map<String, String> map = jedis.hgetAll(key);
 				resultPair = "Key: " +key + System.lineSeparator() 
 								+ getTimeToLive(key) + System.lineSeparator() 
-								+ "Value [" + System.lineSeparator()
-								+ StringUtils.join(map,System.lineSeparator()) + System.lineSeparator()
-								+ "]" + System.lineSeparator();
+								+ "Value: "+ System.lineSeparator() 
+								+ RedisUtil.ConvertMapToString(map);
 				
 			} else if(type.equals("set")) {
 				Set<String> set = jedis.smembers(key);
 				resultPair = "Key: " +key + System.lineSeparator() 
 								+ getTimeToLive(key) + System.lineSeparator() 
-								+ "Value [" + System.lineSeparator()
-								+ StringUtils.join(set,System.lineSeparator()) + System.lineSeparator()
-								+ "]" + System.lineSeparator();
+								+ "Value: " + System.lineSeparator()
+								+ RedisUtil.ConvertSetToString(set);
 				
 			} else if(type.equals("list")) {
 				@SuppressWarnings("deprecation")
 				List<String> list=jedis.brpop(key);
 				resultPair ="Key: " + key + System.lineSeparator()
 								+ getTimeToLive(key) + System.lineSeparator() 						 
-								+ "Value [" + StringUtils.join(list,System.lineSeparator()) + System.lineSeparator()
-								+ "]" + System.lineSeparator();
+								+ "Value: " + System.lineSeparator()
+								+ RedisUtil.ConvertListToString(list);
 				
 			}else if(type.equals("string")){
 				String value = jedis.get(key);
 				resultPair ="Key: " + key + System.lineSeparator() 
 								+ getTimeToLive(key) + System.lineSeparator() 
-								+ "Value [" + System.lineSeparator()
-								+ value + System.lineSeparator()
-								+ "]" + System.lineSeparator();
-			}
+								+ "Value: "+ value + System.lineSeparator();
+				}
 			result += resultPair;
 		}
 
@@ -134,15 +132,21 @@ public class RedisService {
 		try {
 			result = jedis.del(key);
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "Connection Fail: " + ex.getMessage());
+			JOptionPane.showMessageDialog(null, "Fail to Connect server: " + ex.getMessage());
 			return -1;
 		}
 		return result;
 	}
 
 	public String[] RetrieveServerInfo() {
-		String info = jedis.info();
-		String[] infos = info.split(System.lineSeparator());
+		String info;
+		String[] infos = null;
+		try {
+			info = jedis.info();
+			infos = info.split(System.lineSeparator());
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "Fail to retrieve server info: " + ex.getMessage());
+		}
 		return infos;
 	}
 
