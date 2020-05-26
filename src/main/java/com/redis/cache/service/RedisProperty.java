@@ -59,7 +59,7 @@ public class RedisProperty {
 	private void findTrustStoreType() {
 		int index = this.certPath.lastIndexOf(".");
 		if(index > -1) {
-			this.trustStoreType = this.certPath.substring(index);
+			this.trustStoreType = this.certPath.substring(index+1);
 		}
 	}
 	public String getTrustStorePassword() {
