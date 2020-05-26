@@ -10,6 +10,10 @@ public class RedisProperty {
 	private boolean isSslUsed;
 	private String password;
 	private String certPath;
+	private String trustStoreType = "jks";
+	private String trustStorePassword = "changeit";
+
+    
 	public String getHost() {
 		return host;
 	}
@@ -35,6 +39,7 @@ public class RedisProperty {
 	}
 	public void setCertPath(String certPath) {
 		this.certPath = certPath;
+		findTrustStoreType();
 	}
 	public String getPassword() {
 		return password;
@@ -42,12 +47,28 @@ public class RedisProperty {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getTrustStoreType() {
+		return trustStoreType;
+	}
+	public void setTrustStoreType(String trustStoreType) {
+		this.trustStoreType = trustStoreType;
+	}
+	
+	private void findTrustStoreType() {
+		int index = this.certPath.lastIndexOf(".");
+		this.trustStoreType = this.certPath.substring(index);
+	}
 	@Override
 	public String toString() {
 		return "RedisProperty [host=" + host + ", port=" + port + ", isSslUsed=" + isSslUsed + ", password=" + password
-				+ ", certPath=" + certPath + "]";
+				+ ", certPath=" + certPath + ", trustStoreType=" + trustStoreType + "]";
 	}
-	
+	public String getTrustStorePassword() {
+		return trustStorePassword;
+	}
+	public void setTrustStorePassword(String trustStorePassword) {
+		this.trustStorePassword = trustStorePassword;
+	}
 	
 
 }

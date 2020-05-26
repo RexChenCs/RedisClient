@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,7 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
     JTextField hostText,portText;
     JCheckBox isSslCheckText;
     JFileChooser certFile;
-    JPasswordField passwordText;
+    JPasswordField passwordText,certPasswordLabelText;
     
     private RedisHomeFrame homeFrame;
     
@@ -133,8 +132,22 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
         
         selectCertMessage = new JLabel("");
         selectCertMessage.setFont(loginPanelProperty.getTextFont());
-        selectCertMessage.setBounds(loginPanelProperty.getCurrent_X(1), loginPanelProperty.getCurrent_Y(5), loginPanelProperty.getLabel_width()+50, loginPanelProperty.getText_height());
+        selectCertMessage.setBounds(loginPanelProperty.getCurrent_X(2), loginPanelProperty.getCurrent_Y(4), loginPanelProperty.getLabel_width()+50, loginPanelProperty.getText_height());
         this.add(selectCertMessage);
+        
+        
+        //Certification Passowrd password
+        JLabel certPasswordLabel = new JLabel("Certification Password");
+        certPasswordLabel.setForeground(loginPanelProperty.getLabelFgColor());
+        certPasswordLabel.setBackground(loginPanelProperty.getLabelBgColor());
+        certPasswordLabel.setFont(loginPanelProperty.getLabelFont());
+        certPasswordLabel.setBounds(loginPanelProperty.getCurrent_X(0), loginPanelProperty.getCurrent_Y(5), loginPanelProperty.getLabel_width(), loginPanelProperty.getLabel_height());
+        this.add(certPasswordLabel);
+        
+        certPasswordLabelText = new JPasswordField();
+        certPasswordLabelText.setFont(loginPanelProperty.getTextFont());
+        certPasswordLabelText.setBounds(loginPanelProperty.getCurrent_X(1), loginPanelProperty.getCurrent_Y(5), loginPanelProperty.getText_width(), loginPanelProperty.getText_height());
+        this.add(certPasswordLabelText);
         
         JButton submit = new JButton("Connect");
         submit.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -171,8 +184,8 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
     	certFile = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
     	certFile.setAcceptAllFileFilterUsed(false); 
     	certFile.setDialogTitle("Select a cert file"); 
-        FileNameExtensionFilter restrict = new FileNameExtensionFilter("Only .pem files", "pem"); 
-        certFile.addChoosableFileFilter(restrict); 
+        //FileNameExtensionFilter restrict = new FileNameExtensionFilter("Only . files", "pem"); 
+        //certFile.addChoosableFileFilter(restrict); 
         int r = certFile.showOpenDialog(null); 
         if (r == JFileChooser.APPROVE_OPTION) { 
         	selectCertMessage.setText(certFile.getSelectedFile().getAbsolutePath()); 
@@ -193,6 +206,7 @@ public class RedisLoginPanel extends JPanel implements ActionListener {
     	redisProperty.setPort(portText.getText().trim());
     	redisProperty.setPassword(passwordText.getText());
     	redisProperty.setSslUsed(isSslCheckText.isSelected());
+    	redisProperty.setTrustStorePassword(certPasswordLabelText.getText());
     	if(certFile != null && certFile.getSelectedFile() != null) {
     		redisProperty.setCertPath(certFile.getSelectedFile().getAbsolutePath());
     	}
