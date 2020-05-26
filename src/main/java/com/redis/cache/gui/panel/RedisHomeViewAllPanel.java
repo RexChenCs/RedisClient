@@ -9,12 +9,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.redis.cache.service.RedisService;
 
 @Component
 public class RedisHomeViewAllPanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired RedisService redisService;
 	
 	private JPanel titlePanel;
 	private JScrollPane contentPanel;
@@ -46,7 +51,7 @@ public class RedisHomeViewAllPanel extends JPanel{
 	}
 	
 	public void UpdateViewAllKeyList() {
-		String keys[]= { "Monday","Tuesday","Wednesday", "Thursday","Friday","Saturday","Sunday"}; 
+		String[] keys = redisService.SearchAllKey("*");
 		keyList.setListData(keys);
 		keyList.setSelectedIndex(0);
 	}

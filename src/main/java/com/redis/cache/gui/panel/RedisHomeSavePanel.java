@@ -17,17 +17,23 @@ import javax.swing.ScrollPaneLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.redis.cache.service.RedisService;
 
 @Component
 public class RedisHomeSavePanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 
-	private JTextField saveKeyValue, saveBodyValue;
+	private JTextField saveKeyValue, saveBodyValue,saveTtlValue;
 	private JPanel titlePanel = new JPanel(),contentPanel = new JPanel();
 	private JScrollPane saveResponsePanel = new JScrollPane();
 	private JTextArea saveResponse;
+	
+	@Autowired
+	private RedisService redisService;
 	
 	public void InitRedisHomeSavePanel() {
         this.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -64,19 +70,30 @@ public class RedisHomeSavePanel extends JPanel implements ActionListener{
         
         JLabel valueLabel = new JLabel("Value");  
         valueLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        valueLabel.setBounds(250, 90, 193, 24);
+        valueLabel.setBounds(250, 85, 193, 24);
         contentPanel.add(valueLabel);
 
         saveBodyValue = new JTextField();
         saveBodyValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        saveBodyValue.setBounds(300, 90, 281, 24);
+        saveBodyValue.setBounds(300, 85, 281, 24);
         saveBodyValue.setColumns(100);
         contentPanel.add(saveBodyValue);  
+        
+        JLabel ttlLabel = new JLabel("TTL");  
+        ttlLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        ttlLabel.setBounds(250, 120, 193, 24);
+        contentPanel.add(ttlLabel);
+
+        saveTtlValue = new JTextField();
+        saveTtlValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        saveTtlValue.setBounds(300, 120, 281, 24);
+        saveTtlValue.setColumns(100);
+        contentPanel.add(saveTtlValue);
         
         JButton saveBtn = new JButton("Save");
         saveBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         saveBtn.setBorder(BorderFactory.createRaisedBevelBorder());
-        saveBtn.setBounds(650, 90, 100, 24);
+        saveBtn.setBounds(650, 130, 100, 24);
         saveBtn.addActionListener(this);
         contentPanel.add(saveBtn);
         
@@ -104,6 +121,12 @@ public class RedisHomeSavePanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String key  = saveKeyValue.getText();
 		String value = saveBodyValue.getText();
-		saveResponse.setText(key + ": " + value);
+		String ttl = saveTtlValue.getText();
+		if(key.isEmpty() || value.isEmpty()) {
+			saveResponse.setText("Key or Value can not be empty");
+		}else {
+			boolean isSaved = redisService.SaveCache(key, value, ttl);
+			saveResponse.setText(isSaved?"Save Successfully":"Fail to Save");
+		}
 	}
 }

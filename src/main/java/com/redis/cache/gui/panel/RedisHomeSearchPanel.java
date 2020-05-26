@@ -17,13 +17,18 @@ import javax.swing.ScrollPaneLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.redis.cache.service.RedisService;
 
 @Component
 public class RedisHomeSearchPanel extends JPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 
+	@Autowired RedisService redisService;
+	
 	private JTextField searchKeyValue;
 	private JTextArea searchResponse;
 	private JPanel titlePanel,contentPanel;
@@ -98,7 +103,12 @@ public class RedisHomeSearchPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String key = searchKeyValue.getText();
-		searchResponse.setText(key);
+		if(!key.isEmpty()) {
+			String result = redisService.SearchValueByKey(key);
+			searchResponse.setText(result);
+		}else {
+			searchResponse.setText("Key can not be empty");
+		}
 	}
 
 }

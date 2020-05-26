@@ -9,12 +9,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.redis.cache.service.RedisService;
 
 @Component
 public class RedisHomeServerInfoPanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired 
+	private RedisService redisService;
 	
 	private JList<String> serverInfoList = new JList<>();
 	private JPanel titlePanel;
@@ -46,7 +52,7 @@ public class RedisHomeServerInfoPanel extends JPanel{
 	}
 	
 	public void UpdateServerInfoList() {
-		String keys[]= { "version","pool","config"}; 
+		String keys[]= redisService.RetrieveServerInfo(); 
 		serverInfoList.setListData(keys);
 		serverInfoList.setSelectedIndex(0);
 	}

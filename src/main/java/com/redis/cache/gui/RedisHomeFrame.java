@@ -28,7 +28,7 @@ public class RedisHomeFrame extends JFrame {
 	private RedisLoginPanel redisLoginPanel;
 	
 	@Autowired
-	RedisHomeMenuPanel redisHomeMenuPanel;
+	private RedisHomeMenuPanel redisHomeMenuPanel;
 	
 	@Autowired
 	private RedisHomeViewAllPanel redisHomeViewAllPanel;
@@ -52,8 +52,8 @@ public class RedisHomeFrame extends JFrame {
 		this.setBackground(Color.WHITE);
 		this.setResizable(false);
 		redisLoginPanel.InitRedisLoginPanel(this);
-		redisHomeViewAllPanel.InitRedisHomeViewAllPanel();
 		redisHomeMenuPanel.InitRedisHomeMenuPanel(this);
+		redisHomeViewAllPanel.InitRedisHomeViewAllPanel();
 		redisHomeSearchPanel.InitRedisHomeSearchPanel();
 		redisHomeSavePanel.InitRedisHomeSavePanel();
 		redisHomeDeletePanel.InitRedisHomeDeletePanel();

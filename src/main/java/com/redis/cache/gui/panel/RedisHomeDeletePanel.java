@@ -17,7 +17,10 @@ import javax.swing.ScrollPaneLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.redis.cache.service.RedisService;
 
 @Component
 public class RedisHomeDeletePanel extends JPanel implements ActionListener{
@@ -29,6 +32,9 @@ public class RedisHomeDeletePanel extends JPanel implements ActionListener{
 	private JScrollPane deleteResponsePanel = new JScrollPane();
 	private JTextField deleteKeyValue;
 	private JTextArea deleteResponse;
+	
+	@Autowired
+	private RedisService redisService;
 	
 	public void InitRedisHomeDeletePanel() {
         this.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -96,6 +102,18 @@ public class RedisHomeDeletePanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String key = deleteKeyValue.getText();
-		deleteResponse.setText(key);
+		
+		if(! key.isEmpty()) {
+			long numOfCacheDeleted = redisService.DeleteCache(key);
+			if(numOfCacheDeleted == -1) {
+				deleteResponse.setText("Fail to Delete");
+			}else if(numOfCacheDeleted == 0) {
+				deleteResponse.setText("None of the specified key existed: "+key);
+			}else {
+				deleteResponse.setText(numOfCacheDeleted+" keys were removed");
+			}
+		}else {
+			deleteResponse.setText("Key can not be empty");
+		}
 	}
 }
